@@ -1,6 +1,6 @@
-#include "starletcontrols/cameraController.hpp"
-#include "starletcontrols/inputManager.hpp"
-#include "starletmath/constants.hpp"
+#include "StarletControls/cameraController.hpp"
+#include "StarletControls/inputManager.hpp"
+#include "StarletMath/constants.hpp"
 #include <GLFW/glfw3.h>
 #include <cmath>
 

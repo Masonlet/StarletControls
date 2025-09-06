@@ -1,6 +1,6 @@
 #include <GLFW/glfw3.h>
-#include "starletcontrols/inputManager.hpp"
-#include "starletparsers/utils/log.hpp"
+#include "StarletControls/inputManager.hpp"
+#include "StarletParsers/utils/log.hpp"
 
 const int InputManager::trackedKeys[TRACKED_KEY_COUNT] = {
   GLFW_KEY_W, GLFW_KEY_A, GLFW_KEY_S, GLFW_KEY_D,

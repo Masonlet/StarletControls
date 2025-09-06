@@ -1,7 +1,7 @@
 #pragma once 
 
 struct GLFWwindow;
-#include "starletmath/vec2.hpp"
+#include "StarletMath/vec2.hpp"
 
 class InputManager {
 public:

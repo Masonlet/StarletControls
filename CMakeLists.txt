@@ -32,13 +32,13 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 FetchContent_Declare(glfw GIT_REPOSITORY https://github.com/glfw/glfw.git GIT_TAG 3.4)
 FetchContent_MakeAvailable(glfw)
 
-FetchContent_Declare(StarletParsers GIT_REPOSITORY https://github.com/masonlet/starletparsers.git GIT_TAG main)
-FetchContent_MakeAvailable(StarletParsers)
+FetchContent_Declare(StarletScene GIT_REPOSITORY https://github.com/masonlet/starletscene.git GIT_TAG main)
+FetchContent_MakeAvailable(StarletScene)
 
 FetchContent_Declare(StarletMath GIT_REPOSITORY https://github.com/masonlet/starletmath.git GIT_TAG main)
 FetchContent_MakeAvailable(StarletMath)
 
-target_link_libraries(StarletControls PUBLIC glfw StarletParsers StarletMath)
+target_link_libraries(StarletControls PUBLIC glfw StarletScene StarletMath)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "External")
