@@ -1,57 +1,38 @@
 #include <GLFW/glfw3.h>
 #include "StarletControls/inputManager.hpp"
 #include "StarletParsers/utils/log.hpp"
+static_assert(InputManager::keyCount() == GLFW_KEY_LAST + 1, "KEY_COUNT must equal GLFW_KEY_LAST + 1");
 
-const int InputManager::trackedKeys[TRACKED_KEY_COUNT] = {
-  GLFW_KEY_W, GLFW_KEY_A, GLFW_KEY_S, GLFW_KEY_D,
-  GLFW_KEY_SPACE, GLFW_KEY_LEFT_CONTROL,
-  GLFW_KEY_UP, GLFW_KEY_DOWN, GLFW_KEY_LEFT, GLFW_KEY_RIGHT,
-  GLFW_KEY_COMMA, GLFW_KEY_PERIOD, GLFW_KEY_E, GLFW_KEY_Q,
-  GLFW_KEY_R, GLFW_KEY_F, GLFW_KEY_T, GLFW_KEY_G, GLFW_KEY_Y, GLFW_KEY_H
-};
+void InputManager::clear() {
+  keyLast.fill(false);
+}
 
 void InputManager::update(GLFWwindow* window) {
-  for (int i = 0; i < TRACKED_KEY_COUNT; ++i) {
-    previousKeyState[i] = keyState[i];
-    keyState[i] = glfwGetKey(window, trackedKeys[i]) == GLFW_PRESS;
-  }
-  
   double xPos, yPos;
   glfwGetCursorPos(window, &xPos, &yPos);
 
   if (!cursorLocked) {
     mouseDelta = { 0.0f, 0.0f };
-    lastMouseX = xPos;
-    lastMouseY = yPos;
+    lastMousePos = { xPos, yPos };
     firstMouse = true;
     return;
   }
 
   if (firstMouse) {
-    lastMouseX = xPos;
-    lastMouseY = yPos;
+    lastMousePos = { xPos, yPos };
     firstMouse = false;
   }
 
-  mouseDelta.x = static_cast<float>(xPos - lastMouseX);
-  mouseDelta.y = static_cast<float>(lastMouseY - yPos);
-  lastMouseX = xPos;
-  lastMouseY = yPos;
+  mouseDelta.x = xPos - lastMousePos.x;
+  mouseDelta.y = lastMousePos.y - yPos;
+  lastMousePos = { xPos, yPos };
 }
 
 bool InputManager::isKeyDown(int key) const {
-  for (int i = 0; i < TRACKED_KEY_COUNT; ++i)
-    if (trackedKeys[i] == key)
-      return keyState[i];
-
-  return false;
+  return validKey(key) && keyDown[key];
 }
 bool InputManager::isKeyPressed(int key) const {
-  for (int i = 0; i < TRACKED_KEY_COUNT; ++i)
-    if (trackedKeys[i] == key)
-      return keyState[i] && !previousKeyState[i]; 
-
-  return false;
+  return validKey(key) && keyLast[key];
 }
 
 void InputManager::setCursorLocked(bool locked) {
@@ -59,3 +40,37 @@ void InputManager::setCursorLocked(bool locked) {
   firstMouse = true;
 }
 
+void InputManager::onKey(int key, int action, int mods) {
+  if (!validKey(key)) return;
+
+  if (action == GLFW_PRESS) {
+    if (!keyDown[key]) keyLast[key] = true;
+    keyDown[key] = true;
+  }
+  else if (action == GLFW_RELEASE) {
+    keyDown[key] = false;
+  }
+
+  keyEvents.push_back({ key, action, mods });
+}
+
+void InputManager::onScroll(double xOffset, double yOffset) {
+  scrollDelta.x += xOffset;
+  scrollDelta.y += yOffset;
+}
+
+std::vector<KeyEvent> InputManager::consumeKeyEvents() {
+  std::vector<KeyEvent> out;
+  out.swap(keyEvents);
+  return out;
+}
+double InputManager::consumeScrollX() {
+  double x = scrollDelta.x;
+  scrollDelta.x = 0.0f;
+  return x;
+}
+double InputManager::consumeScrollY() {
+  double y = scrollDelta.y;
+  scrollDelta.y = 0.0f;
+  return y;
+}

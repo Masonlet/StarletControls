@@ -2,27 +2,46 @@
 
 struct GLFWwindow;
 #include "StarletMath/vec2.hpp"
+#include <cstdint> 
+#include <array> 
+#include <vector>
+
+struct KeyEvent {
+  int key;
+  int action;
+  int mods;
+};
 
 class InputManager {
 public:
+  void clear();
   void update(GLFWwindow* window);
-    
+
+  static constexpr int keyCount() { return 349; }
   bool isKeyDown(int key) const;
   bool isKeyPressed(int key) const;
+  void onKey(int key, int action, int mods);
+  void onScroll(double xoffset, double yoffset);
 
-  inline Vec2 getMouseDelta() const { return mouseDelta;  }
+  std::vector<KeyEvent> consumeKeyEvents();
+  double consumeScrollX();
+  double consumeScrollY();
+
+  inline Vec2<double> getMouseDelta() const { return mouseDelta; }
 
   void setCursorLocked(bool locked);
   inline bool isCursorLocked() const { return cursorLocked; }
 
 private:
-  static constexpr  int TRACKED_KEY_COUNT{ 20 };
-  static const int trackedKeys[TRACKED_KEY_COUNT];
+  static constexpr int KEY_MAX = 349; // GLFW_KEY_LAST + 1
+  static bool validKey(int key) { return key >= 0 && key < KEY_MAX; }
 
-  bool keyState[TRACKED_KEY_COUNT]{false};
-  bool previousKeyState[TRACKED_KEY_COUNT]{false};
+  std::vector<KeyEvent> keyEvents;
+  std::array<bool, KEY_MAX> keyDown{};
+  std::array<bool, KEY_MAX> keyLast{};
 
-  Vec2 mouseDelta{ 0.0f, 0.0f };
-  double lastMouseX{ 0.0 }, lastMouseY{ 0.0 };
+  Vec2<double> mouseDelta{ 0.0, 0.0 };
+  Vec2<double> scrollDelta{ 0.0, 0.0 };
+  Vec2<double> lastMousePos{ 0.0, 0.0 };
   bool firstMouse{ true }, cursorLocked{ true };
 };
