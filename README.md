@@ -11,8 +11,17 @@ A lightweight input &amp; control management library for Starlet projects with O
 ## Building the Project
 This project uses **CMake**. Follow these steps to build:
 
-### Standalone
+### As a Dependency
+```cmake
+include(FetchContent)
 
+FetchContent_Declare(StarletControls GIT_REPOSITORY https://github.com/Masonlet/StarletControls.git GIT_TAG main)
+FetchContent_MakeAvailable(StarletControls)
+
+target_link_libraries(YourAppName PRIVATE StarletControls)
+```
+
+### Standalone
 #### 1. Clone the Repository
 ```bash
 git clone https://github.com/Masonlet/StarletControls.git
@@ -39,15 +48,3 @@ Can be safely omitted on Windows if you're using Visual Studio
   cmake --build .
   ```
   Or open the generated `.sln` file in Visual Studio and build the solution.
-
-### As a Dependency
-
-```cmake
-include(FetchContent)
-
-FetchContent_Declare(StarletControls GIT_REPOSITORY https://github.com/Masonlet/StarletControls.git GIT_TAG main)
-FetchContent_MakeAvailable(StarletControls)
-
-target_link_libraries(YourAppName PRIVATE StarletControls)
-```
-
