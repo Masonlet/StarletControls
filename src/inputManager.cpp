@@ -40,18 +40,17 @@ void InputManager::setCursorLocked(bool locked) {
   firstMouse = true;
 }
 
-void InputManager::onKey(int key, int action, int mods) {
-  if (!validKey(key)) return;
+void InputManager::onKey(KeyEvent event) {
+  if (!validKey(event.key)) return;
 
-  if (action == GLFW_PRESS) {
-    if (!keyDown[key]) keyLast[key] = true;
-    keyDown[key] = true;
+  if (event.action == GLFW_PRESS) {
+    if (!keyDown[event.key]) keyLast[event.key] = true;
+    keyDown[event.key] = true;
   }
-  else if (action == GLFW_RELEASE) {
-    keyDown[key] = false;
-  }
+  else if (event.action == GLFW_RELEASE)
+    keyDown[event.key] = false;
 
-  keyEvents.push_back({ key, action, mods });
+  keyEvents.push_back(event);
 }
 
 void InputManager::onScroll(double xOffset, double yOffset) {

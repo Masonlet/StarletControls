@@ -20,7 +20,7 @@ public:
   static constexpr int keyCount() { return 349; }
   bool isKeyDown(int key) const;
   bool isKeyPressed(int key) const;
-  void onKey(int key, int action, int mods);
+  void onKey(KeyEvent event);
   void onScroll(double xoffset, double yoffset);
 
   std::vector<KeyEvent> consumeKeyEvents();
