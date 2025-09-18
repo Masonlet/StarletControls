@@ -18,19 +18,3 @@ source_group(TREE ${CONTROL_INC_DIR} PREFIX "Header Files" FILES ${CONTROLS_HEAD
 
 target_sources(${CONTROL_NAME} PUBLIC ${CONTROLS_HEADERS} PRIVATE ${CONTROLS_SRC})
 target_include_directories(${CONTROL_NAME} PUBLIC $<BUILD_INTERFACE:${CONTROL_INC_DIR}> $<INSTALL_INTERFACE:include>)
-
-include(FetchContent)
-set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
-FetchContent_Declare(glfw GIT_REPOSITORY https://github.com/glfw/glfw.git GIT_TAG 3.4)
-FetchContent_MakeAvailable(glfw)
-
-FetchContent_Declare(StarletScene GIT_REPOSITORY https://github.com/masonlet/starletscene.git GIT_TAG main)
-FetchContent_Declare(StarletMath GIT_REPOSITORY https://github.com/masonlet/starletmath.git GIT_TAG main)
-FetchContent_MakeAvailable(StarletMath StarletScene)
-
-target_link_libraries(${CONTROL_NAME} PUBLIC glfw StarletScene StarletMath)
-
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "External")
