@@ -13,7 +13,7 @@ if(NOT TARGET ${CONTROL_NAME})
   source_group(TREE ${CONTROL_SRC_DIR} PREFIX "Source Files" FILES ${CONTROLS_SRC})
   source_group(TREE ${CONTROL_INC_DIR} PREFIX "Header Files" FILES ${CONTROLS_HEADERS})
 
-  target_sources(${CONTROL_NAME} PUBLIC ${CONTROLS_HEADERS} PRIVATE ${CONTROLS_SRC})
+  target_sources(${CONTROL_NAME} PRIVATE ${CONTROLS_SRC} ${CONTROLS_HEADERS} )
   target_include_directories(${CONTROL_NAME} PUBLIC $<BUILD_INTERFACE:${CONTROL_INC_DIR}> $<INSTALL_INTERFACE:include>)
   target_link_libraries(${CONTROL_NAME} PUBLIC glfw StarletScene StarletMath)
 endif()
