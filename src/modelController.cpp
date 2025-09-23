@@ -1,6 +1,9 @@
-#include "StarletScene/components/model.hpp"
 #include "StarletControls/modelController.hpp"
+
+#include "StarletScene/components/model.hpp"
+
 #include "StarletControls/inputManager.hpp"
+
 #include <GLFW/glfw3.h>
 
 void ModelController::update(Model& model, const InputManager& input, float deltaTime) {

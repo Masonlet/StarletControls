@@ -1,7 +1,10 @@
-#include "StarletScene/components/camera.hpp"
 #include "StarletControls/cameraController.hpp"
+
+#include "StarletScene/components/camera.hpp"
+
 #include "StarletControls/inputManager.hpp"
 #include "StarletMath/constants.hpp"
+
 #include <GLFW/glfw3.h>
 #include <cmath>
 

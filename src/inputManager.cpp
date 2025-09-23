@@ -1,6 +1,9 @@
-#include <GLFW/glfw3.h>
 #include "StarletControls/inputManager.hpp"
+
 #include "StarletParsers/utils/log.hpp"
+
+#include <GLFW/glfw3.h>
+
 static_assert(InputManager::keyCount() == GLFW_KEY_LAST + 1, "KEY_COUNT must equal GLFW_KEY_LAST + 1");
 
 void InputManager::clear() {
