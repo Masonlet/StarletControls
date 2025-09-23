@@ -1,4 +1,4 @@
-#include "StarletScene/objects/camera.hpp"
+#include "StarletScene/components/camera.hpp"
 #include "StarletControls/cameraController.hpp"
 #include "StarletControls/inputManager.hpp"
 #include "StarletMath/constants.hpp"
