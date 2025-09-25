@@ -1,47 +1,28 @@
 #pragma once 
 
-struct GLFWwindow;
-#include "StarletMath/vec2.hpp"
-#include <cstdint> 
-#include <array> 
-#include <vector>
+#include "keyboardManager.hpp"
+#include "mouseManager.hpp"
 
-struct KeyEvent {
-  int key;
-  int action;
-  int mods;
-};
+struct GLFWwindow;
 
 class InputManager {
 public:
-  void clear();
-  void update(GLFWwindow* window);
+  inline void clear() { keyboard.clear(); }
+  inline void update(GLFWwindow* window) { mouse.update(window); }
 
-  static constexpr int keyCount() { return 349; }
-  bool isKeyDown(int key) const;
-  bool isKeyPressed(int key) const;
-  void onKey(KeyEvent event);
-  void onScroll(double xoffset, double yoffset);
+  void onKey(const KeyEvent& event)        { keyboard.onKey(event); }
+  bool isKeyDown(int key) const            { return keyboard.isKeyDown(key);    }
+  bool isKeyPressed(int key) const         { return keyboard.isKeyPressed(key); }
+  std::vector<KeyEvent> consumeKeyEvents() { return keyboard.consumeKeyEvents(); }
 
-  std::vector<KeyEvent> consumeKeyEvents();
-  double consumeScrollX();
-  double consumeScrollY();
-
-  inline Vec2<double> getMouseDelta() const { return mouseDelta; }
-
-  void setCursorLocked(bool locked);
-  inline bool isCursorLocked() const { return cursorLocked; }
+  void onScroll(double xOffset, double yOffset) { mouse.onScroll(xOffset, yOffset); }
+  void setCursorLocked(bool locked)             { mouse.setCursorLocked(locked);    }
+  double consumeScrollX()            { return mouse.consumeScrollX(); }
+  double consumeScrollY()            { return mouse.consumeScrollY(); }
+  bool isCursorLocked() const        { return mouse.isCursorLocked(); }
+  Vec2<double> getMouseDelta() const { return mouse.getMouseDelta();  }
 
 private:
-  static constexpr int KEY_MAX = 349; // GLFW_KEY_LAST + 1
-  static bool validKey(int key) { return key >= 0 && key < KEY_MAX; }
-
-  std::vector<KeyEvent> keyEvents;
-  std::array<bool, KEY_MAX> keyDown{};
-  std::array<bool, KEY_MAX> keyLast{};
-
-  Vec2<double> mouseDelta{ 0.0, 0.0 };
-  Vec2<double> scrollDelta{ 0.0, 0.0 };
-  Vec2<double> lastMousePos{ 0.0, 0.0 };
-  bool firstMouse{ true }, cursorLocked{ true };
+  KeyboardManager keyboard;
+  MouseManager mouse;
 };
