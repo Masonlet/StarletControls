@@ -1,12 +1,8 @@
 # StarletControls
-A lightweight input &amp; control management library for Starlet projects with OpenGL engines in mind.
+A lightweight input management library for Starlet projects with OpenGL engines in mind.
 
 ## Features
 - Keyboard, mouse, and scroll handling via **InputManager**
-- Extendable controller abstraction: `Controller<T>`
-- Drop-in controllers:
-    - `FreeCameraController` for free-moving cameras
-    - `ModelController` for interactive transform + scale + rotation
 
 ## Using as a Dependency
 ```cmake
