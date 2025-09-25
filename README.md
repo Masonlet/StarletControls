@@ -2,7 +2,9 @@
 A lightweight input management library for Starlet projects with OpenGL engines in mind.
 
 ## Features
-- Keyboard, mouse, and scroll handling via **InputManager**
+- Unified **InputManager** that handles keyboard and mouse inputs
+- **KeyboardManager** for key states + key events
+- **MouseManager** for cursor movement, scroll, and lock state
 
 ## Using as a Dependency
 ```cmake
