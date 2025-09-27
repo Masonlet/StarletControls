@@ -8,7 +8,7 @@ void KeyboardManager::resetKeys() {
   keyLast.fill(false);
 }
 
-void KeyboardManager::onKey(const KeyEvent event) {
+void KeyboardManager::onKey(const KeyEvent& event) {
   if (!validKey(event.key)) return;
 
   if (event.action == GLFW_PRESS) {

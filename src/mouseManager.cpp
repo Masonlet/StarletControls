@@ -13,7 +13,7 @@ void MouseManager::updateMousePosition(GLFWwindow* window) {
   glfwGetCursorPos(window, &xPos, &yPos);
 
   if (!cursorLocked) {
-    mouseDelta = { 0.0f, 0.0f };
+    mouseDelta = { 0.0, 0.0 };
     lastMousePos = { xPos, yPos };
     firstMouse = true;
     return;
@@ -29,7 +29,7 @@ void MouseManager::updateMousePosition(GLFWwindow* window) {
   lastMousePos = { xPos, yPos };
 }
 
-void MouseManager::onButton(const MouseButtonEvent event) {
+void MouseManager::onButton(const MouseButtonEvent& event) {
   if (!validButton(event.button)) return;
 
   if (event.action == GLFW_PRESS) {
@@ -56,12 +56,12 @@ std::vector<MouseButtonEvent> MouseManager::consumeButtonEvents() {
 
 double MouseManager::consumeScrollX() {
   double x = scrollDelta.x;
-  scrollDelta.x = 0.0f;
+  scrollDelta.x = 0.0;
   return x;
 }
 double MouseManager::consumeScrollY() {
   double y = scrollDelta.y;
-  scrollDelta.y = 0.0f;
+  scrollDelta.y = 0.0;
   return y;
 }
 

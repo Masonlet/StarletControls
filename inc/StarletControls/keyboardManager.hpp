@@ -15,7 +15,7 @@ public:
 
   void resetKeys();
 
-  void onKey(const KeyEvent event);
+  void onKey(const KeyEvent& event);
   bool isKeyDown(const int key) const;
   bool isKeyPressed(const int key) const;
   std::vector<KeyEvent> consumeKeyEvents();

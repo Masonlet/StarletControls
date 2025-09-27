@@ -7,26 +7,26 @@ struct GLFWwindow;
 
 class InputManager {
 public:
-  inline void reset() { keyboard.resetKeys(); mouse.resetButtons(); }
+  void reset();
 
-  void onKey(const KeyEvent& event)        { keyboard.onKey(event); }
-  bool isKeyDown(int key) const            { return keyboard.isKeyDown(key);    }
-  bool isKeyPressed(int key) const         { return keyboard.isKeyPressed(key); }
-  std::vector<KeyEvent> consumeKeyEvents() { return keyboard.consumeKeyEvents(); }
+  void onKey(const KeyEvent& event);
+  bool isKeyDown(const int key) const;
+  bool isKeyPressed(const int key) const;
+  std::vector<KeyEvent> consumeKeyEvents();
 
-  inline void updateMousePosition(GLFWwindow* window) { mouse.updateMousePosition(window); }
+  void setCursorLocked(const bool locked);
+  bool isCursorLocked() const;
+  Vec2<double> getMouseDelta() const;
+  void updateMousePosition(GLFWwindow* window);
 
-  void onButton(const MouseButtonEvent event) { mouse.onButton(event); }
-  bool isButtonDown(const int button) const           { return mouse.isButtonDown(button); }
-  bool isButtonPressed(const int button) const        { return mouse.isButtonPressed(button);}
-  std::vector<MouseButtonEvent> consumeButtonEvents() { return mouse.consumeButtonEvents(); }
+  void onButton(const MouseButtonEvent& event);
+  bool isButtonDown(const int button) const;
+  bool isButtonPressed(const int button) const;
+  std::vector<MouseButtonEvent> consumeButtonEvents();
 
-  void onScroll(double xOffset, double yOffset) { mouse.onScroll(xOffset, yOffset); }
-  void setCursorLocked(bool locked)             { mouse.setCursorLocked(locked);    }
-  double consumeScrollX()            { return mouse.consumeScrollX(); }
-  double consumeScrollY()            { return mouse.consumeScrollY(); }
-  bool isCursorLocked() const        { return mouse.isCursorLocked(); }
-  Vec2<double> getMouseDelta() const { return mouse.getMouseDelta();  }
+  void onScroll(const double xOffset, const double yOffset);
+  double consumeScrollX();
+  double consumeScrollY();
 
 private:
   KeyboardManager keyboard;

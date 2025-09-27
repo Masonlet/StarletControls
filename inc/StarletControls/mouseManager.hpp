@@ -20,8 +20,11 @@ public:
   void resetButtons();
 
   void updateMousePosition(GLFWwindow* window);
-	
-	void onButton(const MouseButtonEvent event);
+  void setCursorLocked(const bool locked);
+  bool isCursorLocked() const { return cursorLocked; }
+  Vec2<double> getMouseDelta() const { return mouseDelta; }
+
+	void onButton(const MouseButtonEvent& event);
 	bool isButtonDown(const int button) const;
 	bool isButtonPressed(const int button) const;
 	std::vector<MouseButtonEvent> consumeButtonEvents();
@@ -29,11 +32,6 @@ public:
   void onScroll(const double xoffset, const double yoffset);
   double consumeScrollX();
   double consumeScrollY();
-
-  inline Vec2<double> getMouseDelta() const { return mouseDelta; }
-
-  void setCursorLocked(const bool locked);
-  inline bool isCursorLocked() const { return cursorLocked; }
 
 private:
 	static bool validButton(const int button) { return button >= 0 && button < BUTTON_MAX; }
