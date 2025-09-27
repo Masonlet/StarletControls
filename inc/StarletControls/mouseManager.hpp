@@ -2,14 +2,31 @@
 
 #include "StarletMath/vec2.hpp"
 
+#include <array>
+#include <vector>
+
 struct GLFWwindow;
+
+struct MouseButtonEvent {
+  const int button;  
+  const int action; 
+  const int mods;
+};
 
 class MouseManager {
 public:
-  void update(GLFWwindow* window);
+	static constexpr int BUTTON_MAX = 8; // GLFW_MOUSE_BUTTON_LAST + 1
+
+  void resetButtons();
+
+  void updateMousePosition(GLFWwindow* window);
+	
+	void onButton(const MouseButtonEvent event);
+	bool isButtonDown(const int button) const;
+	bool isButtonPressed(const int button) const;
+	std::vector<MouseButtonEvent> consumeButtonEvents();
 
   void onScroll(const double xoffset, const double yoffset);
-
   double consumeScrollX();
   double consumeScrollY();
 
@@ -19,6 +36,12 @@ public:
   inline bool isCursorLocked() const { return cursorLocked; }
 
 private:
+	static bool validButton(const int button) { return button >= 0 && button < BUTTON_MAX; }
+
+	std::vector<MouseButtonEvent> buttonEvents;
+	std::array<bool, BUTTON_MAX> buttonDown{ false };
+	std::array<bool, BUTTON_MAX> buttonLast{ false };
+
   Vec2<double> mouseDelta{ 0.0, 0.0 };
   Vec2<double> scrollDelta{ 0.0, 0.0 };
   Vec2<double> lastMousePos{ 0.0, 0.0 };

@@ -4,16 +4,16 @@
 #include <array>
 
 struct KeyEvent {
-  int key;
-  int action;
-  int mods;
+  const int key;
+  const int action;
+  const int mods;
 };
 
 class KeyboardManager {
 public:
   static constexpr int KEY_MAX = 349; // GLFW_KEY_LAST + 1
 
-  void clear();
+  void resetKeys();
 
   void onKey(const KeyEvent event);
   bool isKeyDown(const int key) const;

@@ -7,13 +7,19 @@ struct GLFWwindow;
 
 class InputManager {
 public:
-  inline void clear() { keyboard.clear(); }
-  inline void update(GLFWwindow* window) { mouse.update(window); }
+  inline void reset() { keyboard.resetKeys(); mouse.resetButtons(); }
 
   void onKey(const KeyEvent& event)        { keyboard.onKey(event); }
   bool isKeyDown(int key) const            { return keyboard.isKeyDown(key);    }
   bool isKeyPressed(int key) const         { return keyboard.isKeyPressed(key); }
   std::vector<KeyEvent> consumeKeyEvents() { return keyboard.consumeKeyEvents(); }
+
+  inline void updateMousePosition(GLFWwindow* window) { mouse.updateMousePosition(window); }
+
+  void onButton(const MouseButtonEvent event) { mouse.onButton(event); }
+  bool isButtonDown(const int button) const           { return mouse.isButtonDown(button); }
+  bool isButtonPressed(const int button) const        { return mouse.isButtonPressed(button);}
+  std::vector<MouseButtonEvent> consumeButtonEvents() { return mouse.consumeButtonEvents(); }
 
   void onScroll(double xOffset, double yOffset) { mouse.onScroll(xOffset, yOffset); }
   void setCursorLocked(bool locked)             { mouse.setCursorLocked(locked);    }
