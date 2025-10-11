@@ -13,6 +13,11 @@ struct MouseButtonEvent {
   const int mods;
 };
 
+struct ScrollEvent {
+  const double xOffset;
+  const double yOffset;
+};
+
 class MouseManager {
 public:
 	static constexpr int BUTTON_MAX = 8; // GLFW_MOUSE_BUTTON_LAST + 1
@@ -29,9 +34,8 @@ public:
 	bool isButtonPressed(const int button) const;
 	std::vector<MouseButtonEvent> consumeButtonEvents();
 
-  void onScroll(const double xoffset, const double yoffset);
-  double consumeScrollX();
-  double consumeScrollY();
+  void onScroll(const ScrollEvent& event);
+  std::vector<ScrollEvent> consumeScrollEvents();
 
 private:
 	static bool validButton(const int button) { return button >= 0 && button < BUTTON_MAX; }
@@ -39,6 +43,8 @@ private:
 	std::vector<MouseButtonEvent> buttonEvents;
 	std::array<bool, BUTTON_MAX> buttonDown{ false };
 	std::array<bool, BUTTON_MAX> buttonLast{ false };
+
+  std::vector<ScrollEvent> scrollEvents;
 
   Vec2<double> mouseDelta{ 0.0, 0.0 };
   Vec2<double> scrollDelta{ 0.0, 0.0 };

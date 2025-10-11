@@ -54,21 +54,15 @@ std::vector<MouseButtonEvent> MouseManager::consumeButtonEvents() {
   return events;
 }
 
-double MouseManager::consumeScrollX() {
-  double x = scrollDelta.x;
-  scrollDelta.x = 0.0;
-  return x;
+void MouseManager::onScroll(const ScrollEvent& event) {
+  scrollEvents.push_back(event);
 }
-double MouseManager::consumeScrollY() {
-  double y = scrollDelta.y;
-  scrollDelta.y = 0.0;
-  return y;
+std::vector<ScrollEvent> MouseManager::consumeScrollEvents() {
+  std::vector<ScrollEvent> events = scrollEvents;
+  scrollEvents.clear();
+  return events;
 }
 
-void MouseManager::onScroll(const double xOffset, const double yOffset) {
-  scrollDelta.x += xOffset;
-  scrollDelta.y += yOffset;
-}
 
 void MouseManager::setCursorLocked(const bool locked) {
   cursorLocked = locked;

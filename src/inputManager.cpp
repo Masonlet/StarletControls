@@ -44,12 +44,9 @@ std::vector<MouseButtonEvent> InputManager::consumeButtonEvents() {
 	return mouse.consumeButtonEvents(); 
 }
 
-void InputManager::onScroll(const double xOffset, const double yOffset) { 
-	mouse.onScroll(xOffset, yOffset); 
+void InputManager::onScroll(const ScrollEvent& event) {
+	mouse.onScroll(event);
 }
-double InputManager::consumeScrollX() { 
-	return mouse.consumeScrollX(); 
-}
-double InputManager::consumeScrollY() { 
-	return mouse.consumeScrollY();
+std::vector<ScrollEvent> InputManager::consumeScrollEvents() {
+	return mouse.consumeScrollEvents();
 }

@@ -24,9 +24,8 @@ public:
   bool isButtonPressed(const int button) const;
   std::vector<MouseButtonEvent> consumeButtonEvents();
 
-  void onScroll(const double xOffset, const double yOffset);
-  double consumeScrollX();
-  double consumeScrollY();
+  void onScroll(const ScrollEvent& event);
+  std::vector<ScrollEvent> consumeScrollEvents();
 
 private:
   KeyboardManager keyboard;
